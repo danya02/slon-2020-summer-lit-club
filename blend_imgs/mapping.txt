@@ -1,0 +1,86 @@
+# Lines starting with hash sign (but only when the first character on the line) are comments.
+
+# The format of mapping line is:
+# file-name-or-path -> renpy-name [ -- flag,property=value,... ]
+
+# The file name can have an asterisk as a wildcard, but only once.
+# If it is used, the Ren'Py name must contain an asterisk somewhere, and that is where
+# the values substituted in the file name are placed.
+
+# Since non-wildcard paths may be included in wildcard sets, the lines with no wildcards
+# will be evaluated first. If two wildcard sets intersect, the building process will abort.
+
+# For example, if the assets/ structure is as such:
+
+# assets/
+# | -- simon/
+# |    | -- null.blend
+# |    | -- smiling.blend
+# |    ------------------
+# | -- simon-altform/
+# |    | -- null.blend
+# |    | -- smiling.blend
+# |    | -- flying.blend
+# |    | -- tiny.blend
+# |    ------------------
+# | -- mitch/
+# |    | -- null.blend
+# |    | -- smiling.blend
+# |    | -- concerned.blend
+# |    ------------------
+# -----------------------
+
+# ... and if you want to address a smiling image of Simon as "simon smiling normal",
+# then this is the line you want:
+
+# ----------
+# simon/*.blend -> simon * normal -- transparent
+# ----------
+
+
+# Flags and properties override values that exist in the .blend file, but that might not be useful in their default form:
+# -- transparent ---- Make the background transparent, as opposed to the world color. 
+# -- resolution=xxx:yyy ---- set the render resolution.
+
+# In some cases you want the same flags/properties for a group of lines. In that case, use
+# "%set", "%unset" and "!" for negation. Parameters on the line take precedence.
+# "set" commands overwrite each other and are evaluated top-to-bottom.
+
+# For example, this file, along with the example assets structure:
+
+# ----------
+# %set transparent
+# %set resolution=400:800
+# simon/*.blend -> simon *
+# 
+# simon-altform/flying.blend -> simon alternate flying -- !transparent
+# simon-altform/tiny.blend -> simon alternate tiny -- resolution=100:200
+# simon-altform/huge.blend -> simon alternate huge -- resolution=3000:6000,!transparent
+# simon-altform/*.blend -> simon alternate * -- resolution=500:1000
+#
+# %unset transparent
+# mitch/*.blend -> mitch *
+#
+# %set resolution=300:150
+# mitch/tiny.blend -> mitch tiny
+#
+# %unset resolution
+# mitch/concerned.blend -> mitch concerned -- transparent
+# ----------
+
+# ...will produce these images:
+
+#      Ren'Py name        |  transparency?  |       resolution 
+# =====================================================================
+# simon null              |  yes (%set)     |  400x800  (%set) 
+# simon smiling           |  yes (%set)     |  400x800  (%set) 
+# simon alternate null    |  yes (%set)     |  500x1000 (wildcard line) 
+# simon alternate smiling |  yes (%set)     |  500x1000 (wildcard line)
+# simon alternate tiny    |  yes (%set)     |  100x200  (single line)
+# simon alternate huge    |no (single line) |  3000x6000  (single line)
+# simon alternate flying  |no (single line) |  400x800  (%set)
+# mitch null              |depends on .blend|  400x800  (%set)
+# mitch smiling           |depends on .blend|  400x800  (%set) 
+# mitch tiny              |depends on .blend|  300x150  (%set) 
+# mitch concerned         |yes (single line)|  depends on .blend 
+
