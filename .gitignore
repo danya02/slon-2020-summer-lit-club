@@ -1,5 +1,6 @@
 *.rpyc
 *.rpymc
 *.rpyb
-game/saves/*
+game/saves/
 log.txt
+traceback.txt
