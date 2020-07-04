@@ -14,8 +14,13 @@ init python:
         def say(what, **kwargs):
             # ",,," and ",.," is shorthand for cases around unquoted/
             # quoted parts, to follow the rules for commas near quotes.
+            # Source>> <''>I said something,.,<''she said.>
             # NVL>> "I said something," she said.
             # ADV>> I said something.
+
+            # Source>> <''>This is a statement,,,<'' she continued, ''>and so is this.<''>
+            # NVL>> "This is a statement," she continued, "and so is this."
+            # ADV>> This is a statement, and so is this.
             if NVLMODE:
                 what = what.replace(',,,', ",''").replace(',.,', ",''").replace(',!,', "!''")
                 what = what.replace("<", '').replace(">", '')
@@ -77,6 +82,10 @@ label start:
 
         And I'm not even sure it'll work all that well. But it seems like it's worth a try.
     """
+
+    "Script outline begins here."
+
+    jump exposition
 
     # This ends the game.
 

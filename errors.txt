@@ -1,0 +1,18 @@
+﻿I'm sorry, but errors were detected in your script. Please correct the
+errors listed below, and try again.
+
+
+File "game/incident1.rpy", line 13: expected statement.
+    incident1_visited.append("Изучить подробнее.")
+                                                  ^
+
+File "game/incident1.rpy", line 17: expected statement.
+    incident1_visited.append("Обсудить с знакомым.")
+                                                    ^
+
+File "game/incident1.rpy", line 21: expected statement.
+    incident1_visited.append("Сделать что-то срочное.")
+                                                       ^
+
+Ren'Py Version: Ren'Py 7.3.5.606
+Sat Jul  4 08:05:41 2020

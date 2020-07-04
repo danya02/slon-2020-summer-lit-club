@@ -3,4 +3,5 @@
 *.rpyb
 game/saves/
 log.txt
+errors.txt
 traceback.txt
