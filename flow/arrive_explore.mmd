@@ -1,0 +1,15 @@
+arrive_explore_entry([Scene entrypoint]) --> arrive_explore_choice[Where should I go now?]
+
+arrive_explore_anta_entry([Antagonist's flow entrypoint]) --> arrive_explore_anta_canteen[Antagonist is in canteen] --> arrive_explore_anta_observe[Antagonist is on observation deck] --> arrive_explore_anta_more[Antagonist goes somewhere else -- TODO] --> arrive_explore_anta_exit([Antagonist's flow endpoint])
+
+arrive_explore_choice -- when visited everything --> arrive_explore_exit([Scene exitpoint])
+
+arrive_explore_choice --> arrive_explore_server_room[Visiting server room]
+arrive_explore_choice --> arrive_explore_engine_room[Visiting engine room]
+arrive_explore_choice --> arrive_explore_canteen[Visiting canteen]
+arrive_explore_choice --> arrive_explore_observe[Visiting observation deck]
+
+arrive_explore_engine_room --> arrive_explore_engine_can_stupid[I notice that I can do a stupid thing]
+arrive_explore_engine_can_stupid -- If I do stupid thing --> arrive_explore_engine_die[I die] --> game_exit
+arrive_explore_engine_can_stupid -- If I do not do stupid thing --> arrive_explore_engine_room
+

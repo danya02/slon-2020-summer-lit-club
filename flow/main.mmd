@@ -1,13 +1,26 @@
-{% macro import(name) %}
-subgraph {{name}}
-{% include name %}
-end
-{% endmacro %}
+{# these two macros are for enabling and disabling the "_entry" and "_exit" suffixes. Without them, the subgraphs are vertical, which may be better. #}
+{% macro entry(name) %}{{name}}_entry{% endmacro %}
+{% macro exit(name) %}{{name}}_exit{% endmacro %}
+
 flowchart LR
-        a-->b
-        b-->a
-        subgraph test
-{% include "test.mmd" %}
-        end
-        a-->test
-        test-->b 
+    game_exit([Game exitpoint])
+
+    subgraph arrive[Arriving at spaceship]
+{% include "arrive.mmd" %}
+    end
+    game_entry([Game entrypoint]) --> {{ entry("arrive") }}
+    {{ exit("arrive") }} --> {{ entry("arrive_explore") }}
+    subgraph arrive_explore[Exploring spaceship]
+{% include "arrive_explore.mmd" %}
+    end 
+    subgraph arrive_room[Going into my room]
+{% include "arrive_room.mmd" %}
+    end
+
+    subgraph arrive_afterhours_meet[Meeting antagonist after hours]
+{% include "arrive_afterhours_meet.mmd" %}
+    end
+
+    {{ exit("arrive_explore") }} --> {{entry("arrive_room")}}
+    {{ exit("arrive_room") }} --> arrive_timeskip((Timeskip...))
+    arrive_timeskip --> todo[(TODO)] --> game_exit 

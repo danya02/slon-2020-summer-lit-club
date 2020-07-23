@@ -1,0 +1,10 @@
+arrive_room_entry([Scene entrypoint]) --> arrive_room_recv_email[I receive a message on my room's computer]
+arrive_room_recv_email -- If met antagonist --> arrive_room_email_met["&quot;Nice talking to you...&quot;"]
+arrive_room_recv_email -- If did not meet antagonist --> arrive_room_email_unmet["&quot;I noticed you arrived recently...&quot;"] --> arrive_room_email_wannameet["&quot;Would you like to join me..?&quot;"]
+
+arrive_room_email_met --> arrive_room_sleep[I go to sleep] --> arrive_room_exit([Scene exitpoint])
+
+arrive_room_email_wannameet -- Decline invitation --> arrive_room_email_nomeet[I send message declining invitation] --> arrive_room_email_nexttime["&quot;Okay, maybe next time...&quot;"] --> arrive_room_sleep
+
+arrive_room_email_wannameet -- Accept invitation --> arrive_room_email_yesmeet[I send message accepting invitation] --> {{entry("arrive_afterhours_meet")}}
+{{exit("arrive_afterhours_meet")}} --> arrive_room_sleep
