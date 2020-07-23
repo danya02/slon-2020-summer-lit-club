@@ -1,0 +1,13 @@
+{% macro import(name) %}
+subgraph {{name}}
+{% include name %}
+end
+{% endmacro %}
+flowchart LR
+        a-->b
+        b-->a
+        subgraph test
+{% include "test.mmd" %}
+        end
+        a-->test
+        test-->b 
