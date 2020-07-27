@@ -4,7 +4,7 @@ arrive_room_recv_email -- If did not meet antagonist --> arrive_room_email_unmet
 
 arrive_room_email_met --> arrive_room_sleep[I go to sleep] --> arrive_room_exit([Scene exitpoint])
 
-arrive_room_email_wannameet -- Decline invitation --> arrive_room_email_nomeet[I send message declining invitation] --> arrive_room_email_nexttime["&quot;Okay, maybe next time...&quot;"] --> arrive_room_sleep
+arrive_room_email_wannameet -- Decline invitation --> arrive_room_email_nomeet[I send message declining invitation] --> arrive_room_email_nexttime["&quot;Okay, maybe next time...&quot;"] --> arrive_room_robot_dinner[Delivery robot arrives with dinner] --> arrive_room_sleep
 
 arrive_room_email_wannameet -- Accept invitation --> arrive_room_email_yesmeet[I send message accepting invitation] --> {{entry("arrive_afterhours_meet")}}
 {{exit("arrive_afterhours_meet")}} --> arrive_room_sleep

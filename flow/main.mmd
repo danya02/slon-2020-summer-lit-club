@@ -2,13 +2,19 @@
 {% macro entry(name) %}{{name}}_entry{% endmacro %}
 {% macro exit(name) %}{{name}}_exit{% endmacro %}
 
-flowchart LR
-    game_exit([Game exitpoint])
+flowchart TD
+    todo((TODO))
+    game_exit_early[(Early game exitpoint)]
+
+
+    subgraph game_exit[Game exiting]
+        game_exit_narr[Game exit narration] --> game_exit_credits[Credits] --> game_exitpoint[(Game exitpoint)]
+    end
 
     subgraph arrive[Arriving at spaceship]
 {% include "arrive.mmd" %}
     end
-    game_entry([Game entrypoint]) --> {{ entry("arrive") }}
+    game_entry[(Game entrypoint)] --> {{ entry("arrive") }}
     {{ exit("arrive") }} --> {{ entry("arrive_explore") }}
     subgraph arrive_explore[Exploring spaceship]
 {% include "arrive_explore.mmd" %}
@@ -22,5 +28,11 @@ flowchart LR
     end
 
     {{ exit("arrive_explore") }} --> {{entry("arrive_room")}}
-    {{ exit("arrive_room") }} --> arrive_timeskip((Timeskip...))
-    arrive_timeskip --> todo[(TODO)] --> game_exit 
+    {{ exit("arrive_room") }} --> arrive_timeskip([Timeskip...])
+
+    arrive_timeskip --> {{entry("logistics_breaks")}}
+    subgraph logistics_broke[Logistics system breaks]
+{% include "logistics_breaks.mmd" %}
+    end
+
+    {{exit("logistics_breaks")}} --> todo --> game_exit
