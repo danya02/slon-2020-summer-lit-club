@@ -1,0 +1,15 @@
+logistics_breaks_explore_entry[(Scene entrypoint)] --> logistics_breaks_explore_outside_robots_stupid[Robots in corridor are acting stupid] --> logistics_breaks_explore_neighbors_complain[Neighbors leaving rooms complaining] --> logistics_breaks_explore_map[Looking at map -- where to go?]
+
+logistics_breaks_explore_map --> logistics_breaks_explore_engineroom[Visiting engine room] --> logistics_breaks_explore_engineroom_see_failed_deliveries[I see everybody's failed breakfast deliveries] --> logistics_breaks_explore_engineroom_should_fix[I think I should get on with it]
+
+logistics_breaks_explore_map --> logistics_breaks_explore_canteen[Visiting canteen] -- If visiting early --> logistics_breaks_explore_canteen_crowded[Canteen is crowded] --> logistics_breaks_explore_canteen_breakfast[I'm having breakfast] --> logistics_breaks_explore_canteen_anta_meet["Antagonist approaches, &quot;Can I join..?&quot;"] -- If agree --> logistics_breaks_explore_canteen_anta_chat[Chatting with antagonist] --> logistics_breaks_explore_canteen_finish_meal[I finish my meal and head out]
+logistics_breaks_explore_canteen_anta_meet -- If disagree --> logistics_breaks_explore_canteen_anta_nochat["&quot;Okay, maybe next time...&quot;"] --> logistics_breaks_explore_canteen_finish_meal
+
+logistics_breaks_explore_canteen -- If visiting late --> logistics_breaks_explore_canteen_not_crowded[Canteen is almost empty] --> logistics_breaks_explore_canteen_breakfast_alone[I'm having breakfast alone] --> logistics_breaks_explore_canteen_finish_meal
+
+logistics_breaks_explore_map --> logistics_breaks_explore_serverroom[Visiting server room to fix issue] --> logistics_breaks_explore_serverroom_fixing[I apply a preliminary fix to the issue] --> logistics_breaks_explore_serverroom_minigame([Maybe add minigame here?]) --> logistics_breaks_explore_serverroom_fixed[Fix applied, I should report to captain]
+logistics_breaks_explore_serverroom_minigame -- If failed --> logistics_breaks_explore_serverroom_fail[Robots are confused, have to reset and try again] --> logistics_breaks_explore_serverroom_minigame
+logistics_breaks_explore_serverroom_minigame -- If failed spectacularly --> logistics_breaks_explore_serverroom_epicfail[Robots break spaceship, everybody dies] --> game_exit_early
+
+
+logistics_breaks_explore_map -- Once applied fix --> logistics_breaks_explore_report[Meeting captain] --> logistics_breaks_explore_report_chat[Discussing issue with captain -- TODO] --> logistics_breaks_explore_exit[(Scene exitpoint)]

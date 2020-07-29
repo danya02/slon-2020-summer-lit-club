@@ -1,1 +1,14 @@
-logistics_breaks_entry([Scene entrypoint]) --> logistics_breaks_todo((TODO)) --> logistics_breaks_exit([Scene exitpoint])
+logistics_breaks_entry([Scene entrypoint])
+
+subgraph logistics_breaks_room[In my room]
+{% include "logistics_breaks_room.mmd" %}
+end
+
+subgraph logistics_breaks_explore[Exploring issue]
+{% include "logistics_breaks_explore.mmd" %}
+end
+
+logistics_breaks_entry --> {{ entry("logistics_breaks_room") }}
+{{ exit("logistics_breaks_room") }} --> {{entry("logistics_breaks_explore")}} 
+
+{{ exit("logistics_breaks_explore" ) }} --> logistics_breaks_todo((TODO)) --> logistics_breaks_exit([Scene exitpoint])
